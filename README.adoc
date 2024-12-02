@@ -1,0 +1,1 @@
+= nix-gradle-javatoolchain-kotlin-no-class-roots
