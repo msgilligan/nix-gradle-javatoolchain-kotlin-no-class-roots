@@ -1,7 +1,9 @@
 = nix-gradle-javatoolchain-kotlin-no-class-roots
 
-This demonstrates an issue with the combinaation of the current (see flake.lock)
-versions of `gradle` and `jdk23` nixpkgs `github:nixos/nixpkgs/nixos-unstable`.
+This demonstrates an issue with the combination of the current (see `flake.lock`)
+versions of `gradle` and `jdk23` nixpkgs `github:nixos/nixpkgs/nixos-unstable`. The problem
+occurs when compiling Kotlin using the `javaToolchains` feature of Gradle with `jdk23` being
+made available as a JDK via `javaToolchains` in `gradle.override`.
 
 To reproduce (on Linux)  use:
 
