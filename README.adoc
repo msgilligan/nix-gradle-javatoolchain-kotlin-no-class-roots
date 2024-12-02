@@ -1,1 +1,41 @@
 = nix-gradle-javatoolchain-kotlin-no-class-roots
+
+This demonstrates an issue with the combinaation of the current (see flake.lock)
+versions of `gradle` and `jdk23` nixpkgs `github:nixos/nixpkgs/nixos-unstable`.
+
+To reproduce (on Linux)  use:
+
+. `git clone git@github.com:msgilligan/nix-gradle-javatoolchain-kotlin-no-class-roots.git`
+. `cd nix-gradle-javatoolchain-kotlin-no-class-roots`
+. `nix develop`
+. `gradle build`
+
+You should get the following error:
+
+```
+> Task :compileKotlin FAILED
+e: No class roots are found in the JDK path: /nix/store/a1k4dqs487q2xnimym388bkqg99agdsl-openjdk-23.0.1+11
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':compileKotlin'.
+> A failure occurred while executing org.jetbrains.kotlin.compilerRunner.GradleCompilerRunnerWithWorkers$GradleKotlinCompilerWorkAction
+   > Compilation error. See log for more details
+```
+
+The problem only seems to happen on Linux (not macOS, I'm using aarch64 for both) and can be worked-around
+with either of the following changes:
+
+. Comment out the following line in `build.gradle`
++ 
+	//jvmToolchain(23)
+
+. Replace `jdk23` with `temurin-bin-23` in `flake.nix`, like this
++
+	(gradle.override {
+		javaToolchains = [ jdk23 ]; # Put JDK 23 in Gradle's javaToolchain configuration
+	})
+
+
+
