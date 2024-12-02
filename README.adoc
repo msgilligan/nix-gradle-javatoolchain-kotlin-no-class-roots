@@ -34,7 +34,7 @@ with either of the following changes:
 . Replace `jdk23` with `temurin-bin-23` in `flake.nix`, like this
 +
 	(gradle.override {
-		javaToolchains = [ jdk23 ]; # Put JDK 23 in Gradle's javaToolchain configuration
+		javaToolchains = [ temurin-bin-23 ]; # Put JDK 23 in Gradle's javaToolchain configuration
 	})
 
 
