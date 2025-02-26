@@ -26,7 +26,7 @@
         devShells.default = pkgs.mkShell {
           packages = with pkgs ; [
                 (gradle.override {
-                    javaToolchains = [ jdk23 ]; # Put JDK 23 in Gradle's javaToolchain configuration
+                    java =  jdk23 ; # Run Gradle with  JDK 23
                 })
             ];
         };
