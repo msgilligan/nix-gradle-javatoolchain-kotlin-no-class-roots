@@ -5,6 +5,8 @@ versions of `gradle` and `jdk23` nixpkgs `github:nixos/nixpkgs/nixos-unstable`. 
 occurs when compiling Kotlin using the `javaToolchains` feature of Gradle with `jdk23` being
 made available as a JDK via `javaToolchains` in `gradle.override`.
 
+See: https://github.com/NixOS/nixpkgs/issues/360954
+
 To reproduce (on Linux)  use:
 
 . `git clone git@github.com:msgilligan/nix-gradle-javatoolchain-kotlin-no-class-roots.git`
@@ -33,11 +35,20 @@ with either of the following changes:
 + 
 	//jvmToolchain(23)
 
-. Replace `jdk23` with `temurin-bin-23` in `flake.nix`, like this
+. Replace `jdk23` with `temurin-bin-23` in `flake.nix`, like this:
 +
 	(gradle.override {
 		javaToolchains = [ temurin-bin-23 ]; # Put JDK 23 in Gradle's javaToolchain configuration
 	})
 
+. Replace `javaToolchains = [ jdk23 ]` with `java =  jdk23` in `flake.nix` (see PR #1), like this:
++
+	(gradle.override {
+		java =  jdk23 ; # Run Gradle with  JDK 23
+	})
+
+== Updates
+
+* Update 2025-02-25: Kotlin plugin updated to 2.1.10 and `nix flake update` were committed to `master`
 
 
